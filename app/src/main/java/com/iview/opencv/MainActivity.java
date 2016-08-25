@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -84,9 +85,11 @@ public class MainActivity extends Activity {
             new AsyncTask<String, Integer, Bitmap>() {
                 @Override
                 protected Bitmap doInBackground(String... strings) {
+                    Log.d("TAG","--------------->doInBackground");
                     Bitmap map = ImageUtils.comp(bitmap);
                     int w = map.getWidth();
                     int h = map.getHeight();
+                    Log.d("TAG","bitmap--------------->"+doTestTask(map, w, h));
                     return doTestTask(map, w, h);
                 }
 
@@ -108,7 +111,7 @@ public class MainActivity extends Activity {
     }
 
     private Bitmap doTestTask(Bitmap map, int w, int h) {
-        return new OpenCVHelper().detectPalmFromRawData(map, w, h, "");
+        return new OpenCVHelper().detectPalmFromRawData(map, w, h, "/assets/cascade_14_392_140_HogRGB_0.5_2");
     }
 
     private Bitmap doGray(Bitmap map, int w, int h) {

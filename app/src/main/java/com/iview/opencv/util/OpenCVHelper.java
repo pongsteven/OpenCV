@@ -10,7 +10,7 @@ public class OpenCVHelper {
         System.loadLibrary("OpenCV");
     }
 
-    public native Bitmap detectPalmFromRawData(Bitmap bitmap, int imgHeight, int imgWidth, String path);
+    public native Bitmap detectPalmFromRawData(Bitmap bitmap, int w, int h, String path);
 
     public static native int[] gray(int[] buf, int w, int h);
 

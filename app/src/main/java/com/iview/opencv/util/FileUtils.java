@@ -6,8 +6,8 @@ import android.os.Environment;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Random;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by pengqin on 2016/8/15.
@@ -15,17 +15,17 @@ import java.util.Random;
 public class FileUtils {
 
     public static Uri getStoreImageUri() {
-        String fileName = new Random().nextInt() + "";
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            File file = new File(Environment.getDataDirectory() + fileName);
+
+            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/picture", getFileName());
             if (!file.exists()) {
                 try {
-                    file.mkdir();
+                    file.createNewFile();
+                    Logger.d("path----->" + file.getAbsolutePath() + ",name------->" + file.getName());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-
             return Uri.fromFile(file);
         } else {
             Logger.d("SD卡不存在");
@@ -33,5 +33,10 @@ public class FileUtils {
         }
     }
 
+    private static String getFileName() {
+        Date data = new Date(System.currentTimeMillis());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(data);
+    }
 
 }

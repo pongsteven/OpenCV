@@ -216,7 +216,7 @@ void getResultBitmap(JNIEnv *env, jobject zBitmap, unsigned char * ptr){
 	// From top to bottom
 	int width = info.width;
 	int height = info.height;
-
+ __android_log_print(ANDROID_LOG_DEBUG, "abc",  "step-------->001");
 		for (y = 0; y < height; ++y) {
                  		// From left to right
                  		for (x = 0; x < width; ++x) {
@@ -236,6 +236,7 @@ void getResultBitmap(JNIEnv *env, jobject zBitmap, unsigned char * ptr){
                  	if(pixels != 0){
                  	    pixels = 0;
                  	}
+                 	__android_log_print(ANDROID_LOG_DEBUG, "abc",  "step-------->002");
     	AndroidBitmap_unlockPixels(env, zBitmap);
 }
 jintArray getBitmap(JNIEnv *env,unsigned char * ptr){
@@ -248,12 +249,18 @@ jintArray getBitmap(JNIEnv *env,unsigned char * ptr){
 }
 extern "C" {
 JNIEXPORT jobject JNICALL Java_com_iview_opencv_util_OpenCVHelper_detectPalmFromRawData
-  (JNIEnv *env, jobject jthis, jobject bitmap, jint h, jint w, jstring path){
+  (JNIEnv *env, jobject jthis, jobject bitmap, jint w, jint h, jstring path){
      unsigned char * ptrRGB = new unsigned char[WIDTH_CAMERA * HEIGHT_CAMERA * 3];
+      __android_log_print(ANDROID_LOG_DEBUG, "abc",  "step-------->1");
      extract(env, bitmap, ptrRGB);
+      __android_log_print(ANDROID_LOG_DEBUG, "abc",  "step-------->2");
      char* cStr=Jstring2CStr(env,path);
+      __android_log_print(ANDROID_LOG_DEBUG, "abc",  "step-------->3");
      int count=detectPalmFromRawData(ptrRGB,h,w,cStr);
-    getResultBitmap(env, bitmap, ptrRGB);
+      __android_log_print(ANDROID_LOG_DEBUG, "abc",  "step-------->4");
+     getResultBitmap(env, bitmap, ptrRGB);
+      __android_log_print(ANDROID_LOG_DEBUG, "abc",  "step-------->5");
+     __android_log_print(ANDROID_LOG_DEBUG, "abc",  "bitmap", bitmap);
      return bitmap;
   }
 
